@@ -1,12 +1,17 @@
 import React from "react";
 
 import UserItem from "./UserItem";
+import Card from "../../shared/components/UIElemets/Card";
 
 import "./UsersList.css";
 
 const UsersList = props => {
   if (props.items.length === 0) {
-    return <div className="center">هیچ کاربری در سیستم پیدا نشد</div>;
+    return (
+      <Card>
+        <h2 className="center">هیچ کاربری در سیستم پیدا نشد</h2>
+      </Card>
+    );
   }
   return (
     <ul className="users-list">
