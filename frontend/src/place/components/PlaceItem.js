@@ -16,9 +16,9 @@ const PlaceItem = props => {
           <p>{props.description}</p>
         </div>
         <div className="place-item__actions">
-          <button>VIEW ON MAP</button>
-          <button>EDIT</button>
-          <button>DELETE</button>
+          <button>مشاهده روی نقشه</button>
+          <button>ویرایش</button>
+          <button>حذف</button>
         </div>
       </Card>
     </li>
