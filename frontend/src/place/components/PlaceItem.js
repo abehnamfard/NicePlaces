@@ -1,4 +1,12 @@
+import { withRouter } from "react-router-dom";
 import React from "react";
+import { Button } from "antd";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  FundViewOutlined
+} from "@ant-design/icons";
+import "antd/dist/antd.css";
 
 import Card from "../../shared/components/UIElements/Card";
 import "./PlaceItem.css";
@@ -16,13 +24,24 @@ const PlaceItem = props => {
           <p>{props.description}</p>
         </div>
         <div className="place-item__actions">
-          <button>مشاهده روی نقشه</button>
-          <button>ویرایش</button>
-          <button>حذف</button>
+          <Button shape="round" type="primary" icon={<FundViewOutlined />}>
+            مشاهده روی نقشه
+          </Button>
+          <Button
+            shape="round"
+            type="default"
+            onClick={() => props.history.push(`/places/${props.id}`)}
+            icon={<EditOutlined />}
+          >
+            ویرایش
+          </Button>
+          <Button shape="round" icon={<DeleteOutlined />} danger>
+            حذف
+          </Button>
         </div>
       </Card>
     </li>
   );
 };
 
-export default PlaceItem;
+export default withRouter(PlaceItem);
