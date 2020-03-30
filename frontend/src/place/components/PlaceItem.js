@@ -1,6 +1,6 @@
-import { withRouter } from "react-router-dom";
-import React from "react";
-import { Button } from "antd";
+import React, { useState } from "react";
+import { Map, TileLayer, Marker } from "react-leaflet";
+import { Button, Modal } from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
@@ -10,8 +10,11 @@ import "antd/dist/antd.css";
 
 import Card from "../../shared/components/UIElements/Card";
 import "./PlaceItem.css";
+import { Link } from "react-router-dom";
 
 const PlaceItem = props => {
+  const [mapModalStatus, setMapModalStatus] = useState(false);
+
   return (
     <li className="place-item">
       <Card className="place-item__content">
@@ -24,24 +27,45 @@ const PlaceItem = props => {
           <p>{props.description}</p>
         </div>
         <div className="place-item__actions">
-          <Button shape="round" type="primary" icon={<FundViewOutlined />}>
-            مشاهده روی نقشه
-          </Button>
           <Button
             shape="round"
-            type="default"
-            onClick={() => props.history.push(`/places/${props.id}`)}
-            icon={<EditOutlined />}
+            type="primary"
+            icon={<FundViewOutlined />}
+            onClick={() => setMapModalStatus(!mapModalStatus)}
           >
-            ویرایش
+            مشاهده روی نقشه
           </Button>
-          <Button shape="round" icon={<DeleteOutlined />} danger>
-            حذف
-          </Button>
+          <Link to={`/places/${props.id}`}>
+            <Button shape="round" type="default" icon={<EditOutlined />}>
+              ویرایش
+            </Button>
+          </Link>
+          <Link to="">
+            <Button shape="round" icon={<DeleteOutlined />} danger>
+              حذف
+            </Button>
+          </Link>
         </div>
       </Card>
+      <Modal
+        key={props.id}
+        title={`مشاهده ${props.title}`}
+        centered
+        visible={mapModalStatus}
+        onCancel={() => setMapModalStatus(false)}
+        footer={<Button onClick={() => setMapModalStatus(false)}>بستن</Button>}
+      >
+        <Map
+          center={props.coordinates}
+          zoom="16"
+          style={{ height: 500, width: "100%" }}
+        >
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <Marker position={props.coordinates} />
+        </Map>
+      </Modal>
     </li>
   );
 };
 
-export default withRouter(PlaceItem);
+export default PlaceItem;
